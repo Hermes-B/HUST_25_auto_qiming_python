@@ -1,0 +1,41 @@
+import cv2
+import numpy as np
+image = cv2.imread("/Users/hermes/Desktop/1.jpg")
+print("图片格式为（垂直像素，水平像素，通道数）")
+print("shape =",image.shape)
+input_str = input("请输入4个数字以框定图像的范围，但不要超过图像的大小，并以逗号分隔（格式：起始行,结束行,起始列,结束列）: ")
+numbers = [int(num.strip()) for num in input_str.split(',')]
+if len(numbers) != 4:
+    print("错误：请输入4个数字")
+    exit()
+part_image=image[numbers[0]:numbers[1],numbers[2]:numbers[3]]
+b_mean,g_mean,r_mean=np.mean(part_image,axis=(0,1))
+def bgr_to_hsv(bgr_image):
+    bgr = np.uint8([[bgr_image]])
+    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
+    return hsv[0][0]
+hsv_image = bgr_to_hsv([b_mean,g_mean,r_mean])
+print(f"[{hsv_image[0]},{hsv_image[1]},{hsv_image[2]}]")
+def color(h,s,v):
+    if v <= 46:
+        return "黑"
+    elif 46 < v <= 220 and s <= 43:
+        return "灰"
+    elif 220 <= v <= 255 and s <= 30:
+        return "白"
+    elif 46 <= v <= 255 and 43 < s and (h <= 10 or 156 < h <= 180):
+        return "红"
+    elif 46 <= v and 43 <= s and 11 <= h <= 25:
+        return "橙"
+    elif 46 <= v and 43 <= s and 16 <= h <= 34:
+        return "黄"
+    elif 46 <= v and 43 <= s and 35 <= h <= 77:
+        return "绿"
+    elif 46 <= v and 43 <= s and 78 <= h <= 99:
+        return "青"
+    elif 46 <= v and 43 <= s and 100 <= h <= 124:
+        return "蓝"
+    elif 46 <= v and 43 <= s and 125 <= h <= 155:
+        return "紫"
+color_image=color(hsv_image[0],hsv_image[1],hsv_image[2])
+print(f"选中部分的颜色是{color_image}")
