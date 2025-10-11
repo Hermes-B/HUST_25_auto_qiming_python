@@ -106,7 +106,7 @@ image=cv.imread("test.png",1)#内为(文件路径，输出模式（默认1彩色
 
 
 
-# cv.imshow("image",image)#分别为(窗口名,要显示的图像)
-# cv.waitKey(0)#()内为延迟，函数返回值为输入键对应ASCII码,0输入任何键后执行下一步,非0则延迟结束自动关闭
-# cv.destroyAllWindows()#关闭所有窗口，Waitkey+destroy必须写在代码里，否则无法正常运行
+cv.imshow("image",image)#分别为(窗口名,要显示的图像)
+cv.waitKey(0)#()内为延迟，函数返回值为输入键对应ASCII码,0输入任何键后执行下一步,非0则延迟结束自动关闭
+cv.destroyAllWindows()#关闭所有窗口，Waitkey+destroy必须写在代码里，否则无法正常运行
 
